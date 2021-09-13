@@ -9,7 +9,7 @@ const $peer = {
   connection: new RTCPeerConnection($self.rtcConfig)
 };
 
-requestUserMedia($self.constraints);
+// requestUserMedia($self.constraints);
 
 async function requestUserMedia(constraints) {
   const video = document.querySelector('#self');
