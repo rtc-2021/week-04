@@ -107,6 +107,23 @@ async function handleScSignal({ description, candidate }) {
   console.log('Heard signal event!');
   if (description) {
     console.log('Received SDP Signal:', description);
+
+    const readyForOffer =
+        !$self.isMakingOffer &&
+        ($peer.connection.signalingState === 'stable'
+          || $self.isSettingRemoteAnswerPending);
+
+    const offerCollision = description.type === 'offer' && !readyForOffer;
+
+    $self.isIgnoringOffer = !$self.isPolite && offerCollision;
+
+    if ($self.isIgnoringOffer) {
+      return;
+    }
+
+
+
+
   } else if (candidate) {
     console.log('Received ICE candidate:', candidate);
   }
