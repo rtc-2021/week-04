@@ -21,7 +21,7 @@ async function requestUserMedia(constraints) {
 /**
 * Socket Server Events and Callbacks
 */
-const namespace = window.location.hash.substr(1);
+const namespace = prepareNamespace(window.location.hash, true);
 
 const sc = io(`/${namespace}`, { autoConnect: false });
 
@@ -57,4 +57,19 @@ function handleScDisconnectedPeer() {
 }
 async function handleScSignal() {
   console.log('Heard signal event!');
+}
+
+/**
+ *  Utility Functions
+ */
+function prepareNamespace(hash, set_location) {
+  let ns = hash.replace(/^#/, ''); // remove # from the hash
+  if (/^[0-9]{6}$/.test(ns)) {
+    console.log('Checked existing namespace', ns);
+    return ns;
+  }
+  ns = Math.random().toString().substring(2, 8);
+  console.log('Created new namespace', ns);
+  if (set_location) window.location.hash = ns;
+  return ns;
 }
