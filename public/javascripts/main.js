@@ -32,9 +32,16 @@ registerScEvents();
 const button = document
   .querySelector('#call-button');
 
-button.addEventListener('click', function() {
+button.addEventListener('click', joinCall);
+
+/* DOM Events */
+
+function joinCall() {
   sc.open();
-});
+}
+function leaveCall() {
+  sc.close();
+}
 
 /* Signaling Channel Events */
 
